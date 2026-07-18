@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def cadastro(request):
-    return HttpResponse("Testando Fluxo")
+    return render(request, "cadastro.html")
