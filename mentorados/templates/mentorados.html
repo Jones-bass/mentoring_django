@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'body' %}
+<div class="min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500 selection:text-black">
+  
+  <!-- Navbar Integrada com o Tema -->
+  <header class="border-b border-white/5 bg-zinc-900/60 backdrop-blur-md sticky top-0 z-50">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
+      <div class="flex lg:flex-1">
+        <a href="#" class="-m-1.5 p-1.5 flex items-center gap-2">
+          <img class="h-8 w-auto" src="{% static 'logo.png' %}" alt="Logo">
+        </a>
+      </div>
+      
+      <!-- Menu Mobile Button -->
+      <div class="flex lg:hidden">
+        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-zinc-400 hover:text-white transition-colors">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Links de Navegação -->
+      <div class="hidden lg:flex lg:gap-x-8">
+        <a href="#" class="text-sm font-medium text-emerald-400 border-b-2 border-emerald-500 pb-1 px-1 transition-all">Mentorados</a>
+        <a href="#" class="text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-all">Tarefas</a>
+        <a href="#" class="text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-all">Progressos</a>
+        <a href="#" class="text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-all">Navigators</a>
+      </div>
+      
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <!-- Espaço reservado para Perfil/Sair se necessário -->
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    
+    <!-- Grid Superior: Cadastro e Gráfico -->
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      
+      <!-- Card do Formulário (Ocupa 2 colunas no desktop) -->
+      <div class="lg:col-span-2 rounded-2xl border border-white/10 bg-zinc-900/50 p-6 shadow-xl backdrop-blur-md sm:p-8">
+        <h2 class="text-xl font-bold tracking-tight text-white mb-6">Cadastre seus mentorados</h2>
+        
+        <!-- Alertas de Mensagens -->
+        {% if messages %}
+          {% for message in messages %}
+          <div class="rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm p-3 mb-6 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            {{ message }}
+          </div>
+          {% endfor %}
+        {% endif %}
+
+        <!-- Form configurado para receber arquivos (enctype) -->
+        <form action="" method="POST" enctype="multipart/form-data" class="space-y-5">
+          {% csrf_token %}
+          
+          <div>
+            <label for="nome" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Nome Completo</label>
+            <div class="mt-2">
+              <input type="text" name="nome" id="nome" required placeholder="Ex: João Silva"
+                class="block w-full rounded-lg bg-zinc-800/40 px-3.5 py-2.5 text-white placeholder-zinc-600 border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label for="foto" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Foto de Perfil</label>
+              <div class="mt-2">
+                <input type="file" name="foto" id="foto" required
+                  class="block w-full text-xs text-zinc-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-200 hover:file:bg-zinc-700 file:cursor-pointer border border-zinc-700/50 rounded-lg bg-zinc-800/20 pr-2">
+              </div>
+            </div>
+
+            <div>
+              <label for="estagio" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Estágio atual</label>
+              <div class="mt-2">
+                <select name="estagio" id="estagio" required
+                  class="block w-full rounded-lg bg-zinc-800/40 px-3.5 py-2.5 text-white border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm appearance-none">
+                  <option class="bg-zinc-900 text-white" value="">Selecione o estágio</option>
+                  <option class="bg-zinc-900 text-white" value="10-100k">10-100k</option>
+                  <option class="bg-zinc-900 text-white" value="100-500k">100-500k</option>
+                  <option class="bg-zinc-900 text-white" value="500k-1M">500k-1M</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="navigator" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Navigator Responsável</label>
+            <div class="mt-2">
+              <select name="navigator" id="navigator" required
+                class="block w-full rounded-lg bg-zinc-800/40 px-3.5 py-2.5 text-white border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm">
+                <option class="bg-zinc-900 text-white" value="">Selecione um responsável</option>
+                <option class="bg-zinc-900 text-white" value="Caio">Caio Sampaio</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit"
+              class="flex w-full justify-center cursor-pointer rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 hover:shadow-emerald-500/30 transition-all duration-200">
+              Cadastrar Mentorado
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Card do Gráfico/Métricas (1 coluna no desktop) -->
+      <div class="rounded-2xl border border-white/10 bg-zinc-900/50 p-6 shadow-xl backdrop-blur-md flex flex-col items-center justify-center min-h-[300px]">
+        <span class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-4 self-start">Distribuição por Estágio</span>
+        <div class="relative w-full max-w-[200px] aspect-square flex items-center justify-center">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Seção da Tabela de Mentorados -->
+    <div class="mt-12 rounded-2xl border border-white/10 bg-zinc-900/30 overflow-hidden shadow-xl backdrop-blur-sm">
+      <div class="p-6 border-b border-white/5 bg-zinc-900/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-white">Seus Mentorados</h2>
+          <p class="text-xs text-zinc-400 mt-1">Lista completa de profissionais ativos no programa.</p>
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-white/10 bg-zinc-900/20 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+              <th class="py-4 px-6">Usuário</th>
+              <th class="py-4 px-6 hidden sm:table-cell">Estágio</th>
+              <th class="py-4 px-6">Status</th>
+              <th class="py-4 px-6 hidden md:table-cell">Data Entrada</th>
+              <th class="py-4 px-6 hidden lg:table-cell">Navigator</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5 text-sm text-zinc-300">
+            <!-- Linha Exemplo 1 -->
+            <tr class="hover:bg-white/[0.02] transition-colors">
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                  <div class="h-9 w-9 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center overflow-hidden">
+                    <!-- Substitua o src pela tag da foto dinamicamente se houver -->
+                    <span class="text-xs font-semibold text-emerald-400">JS</span>
+                  </div>
+                  <div>
+                    <span class="font-medium text-white block">Jones Souza</span>
+                    <span class="text-xs text-zinc-500 md:hidden">10-100k • Ativo</span>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-6 hidden sm:table-cell">
+                <span class="inline-flex items-center rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-300 ring-1 ring-inset ring-white/10">
+                  10-100k
+                </span>
+              </td>
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-2">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span class="text-zinc-300 text-sm">Ativo</span>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-zinc-400 hidden md:table-cell">19/07/2026</td>
+              <td class="py-4 px-6 text-zinc-400 hidden lg:table-cell">Jones Souza</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+{% endblock 'body' %}

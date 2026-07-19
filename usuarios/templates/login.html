@@ -39,11 +39,10 @@
 
     <div class="mt-8">
       <form action="{% url 'login' %}" method="POST" class="space-y-5">{% csrf_token %}
-        <div>
-          <label for="username"
-            class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Username</label>
+          <div>
+          <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Email</label>
           <div class="mt-2">
-            <input type="text" name="username" id="username" required placeholder="Seu usuário"
+            <input type="text" name="email" id="email" required placeholder="Seu email"
               class="block w-full rounded-lg bg-zinc-800/50 px-3.5 py-2.5 text-white placeholder-zinc-500 border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm">
           </div>
         </div>
