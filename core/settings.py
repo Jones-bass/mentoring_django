@@ -125,6 +125,6 @@ MEDIA_URL = "/media/"
 
 
 MESSAGE_TAGS = {
-    constants.SUCCESS: "bg-green-50 text-green-700",
-    constants.ERROR: "bg-red-50 text-red-700",
+    constants.SUCCESS: "rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm p-3 mt-4 text-center",
+    constants.ERROR: "rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 mt-4 text-center",
 }

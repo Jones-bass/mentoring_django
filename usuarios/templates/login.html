@@ -4,42 +4,50 @@
 
 {% block 'body' %}
 
-<!-- Container principal com a imagem de fundo cobrindo tudo -->
-<div class="relative flex min-h-screen items-center justify-center bg-zinc-950 px-4 py-12 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat"
-     style="background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1184&auto=format&fit=crop');">
-  
-  <!-- Overlay escuro + desfoque para dar leitura ao texto -->
+<!-- Container principal com a mesma imagem de fundo cobrindo tudo -->
+<div
+  class="relative flex min-h-screen items-center justify-center bg-zinc-950 px-4 py-12 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat"
+  style="background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1184&auto=format&fit=crop');">
+
+  <!-- Overlay escuro + desfoque idêntico ao cadastro -->
   <div class="absolute inset-0 bg-zinc-950/70 backdrop-blur-sm"></div>
 
-  <!-- Card do Formulário (Centralizado e Flutuando com efeito Glassmorphism) -->
-  <div class="relative w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/80 p-8 shadow-2xl backdrop-blur-md sm:p-10">
+  <!-- Card do Formulário (Centralizado, Flutuando com efeito de vidro) -->
+  <div
+    class="relative w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/80 p-8 shadow-2xl backdrop-blur-md sm:p-10">
     <div>
       <img class="mx-auto h-12 w-auto" src="{% static 'logo.png' %}" alt="Logo">
-      <h2 class="mt-5 text-center text-2xl font-bold tracking-tight text-white">Crie sua conta</h2>
+      <h2 class="mt-5 text-center text-2xl font-bold tracking-tight text-white">Entre em sua conta</h2>
       <p class="mt-2 text-center text-sm text-zinc-400">
-        Já tem uma conta?
-        <a href="{% url 'login' %}" class="font-semibold text-emerald-400 hover:text-emerald-300 transition-colors">Faça login</a>
+        Não tem conta?
+        <a href="{% url 'cadastro' %}"
+          class="font-semibold text-emerald-400 hover:text-emerald-300 transition-colors">Crie sua conta aqui</a>
       </p>
 
       {% if messages %}
       {% for message in messages %}
-      <div class="rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm p-3 mt-4 text-center">
-        {{ message }}
+      <div class="rounded-md {{message.tags}} mt-4">
+        <div class="flex">
+          <div class="ml-3 py-4">
+            {{message}}
+          </div>
+        </div>
       </div>
       {% endfor %}
       {% endif %}
     </div>
-    
+
     <div class="mt-8">
-      <form action="{% url 'cadastro' %}" method="POST" class="space-y-5">{% csrf_token %}
+      <form action="{% url 'login' %}" method="POST" class="space-y-5">{% csrf_token %}
         <div>
-          <label for="username" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Username</label>
+          <label for="username"
+            class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Username</label>
           <div class="mt-2">
             <input type="text" name="username" id="username" required placeholder="Seu usuário"
               class="block w-full rounded-lg bg-zinc-800/50 px-3.5 py-2.5 text-white placeholder-zinc-500 border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm">
           </div>
         </div>
-        
+
         <div>
           <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Senha</label>
           <div class="mt-2">
@@ -47,19 +55,11 @@
               class="block w-full rounded-lg bg-zinc-800/50 px-3.5 py-2.5 text-white placeholder-zinc-500 border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm">
           </div>
         </div>
-        
-        <div>
-          <label for="confirmar_senha" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Confirmar senha</label>
-          <div class="mt-2">
-            <input type="password" name="confirmar_senha" id="confirmar_senha" required placeholder="••••••••"
-              class="block w-full rounded-lg bg-zinc-800/50 px-3.5 py-2.5 text-white placeholder-zinc-500 border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm">
-          </div>
-        </div>
-        
+
         <div class="pt-2">
           <button type="submit"
             class="flex w-full justify-center cursor-pointer rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 hover:shadow-emerald-500/30 transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
-            Cadastrar
+            Entrar
           </button>
         </div>
       </form>
