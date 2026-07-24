@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block 'body' %}
+
 <div class="min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500 selection:text-black">
   
   <!-- Navbar Integrada com o Tema -->
@@ -58,8 +59,7 @@
         {% endif %}
 
         <!-- Form configurado para receber arquivos (enctype) -->
-        <form action="" method="POST" enctype="multipart/form-data" class="space-y-5">
-          {% csrf_token %}
+        <form action="{% url 'mentorados' %}" method="POST" enctype="multipart/form-data" class="space-y-5">{% csrf_token %}
           
           <div>
             <label for="nome" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Nome Completo</label>
@@ -78,31 +78,31 @@
               </div>
             </div>
 
+            {% for estagio in estagios %}
             <div>
               <label for="estagio" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Estágio atual</label>
               <div class="mt-2">
                 <select name="estagio" id="estagio" required
                   class="block w-full rounded-lg bg-zinc-800/40 px-3.5 py-2.5 text-white border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm appearance-none">
-                  <option class="bg-zinc-900 text-white" value="">Selecione o estágio</option>
-                  <option class="bg-zinc-900 text-white" value="10-100k">10-100k</option>
-                  <option class="bg-zinc-900 text-white" value="100-500k">100-500k</option>
-                  <option class="bg-zinc-900 text-white" value="500k-1M">500k-1M</option>
+                  <option class="bg-zinc-900 text-white" value="{{estagio.0}}">{{estagio.1}}</option>
                 </select>
               </div>
             </div>
           </div>
+          {% endfor %}
 
+          {% for navigator in navigators %}
           <div>
             <label for="navigator" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Navigator Responsável</label>
             <div class="mt-2">
               <select name="navigator" id="navigator" required
                 class="block w-full rounded-lg bg-zinc-800/40 px-3.5 py-2.5 text-white border border-zinc-700/50 transition-all focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-sm">
-                <option class="bg-zinc-900 text-white" value="">Selecione um responsável</option>
-                <option class="bg-zinc-900 text-white" value="Caio">Caio Sampaio</option>
+                <option class="bg-zinc-900 text-white" value="{{navigator.id}}">{{navigator.nome}}</option>
               </select>
             </div>
           </div>
-
+          {% endfor %}
+          
           <div class="pt-2">
             <button type="submit"
               class="flex w-full justify-center cursor-pointer rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 hover:shadow-emerald-500/30 transition-all duration-200">
@@ -144,22 +144,24 @@
           </thead>
           <tbody class="divide-y divide-white/5 text-sm text-zinc-300">
             <!-- Linha Exemplo 1 -->
+
+          {% for mentorado in mentorados %}
             <tr class="hover:bg-white/[0.02] transition-colors">
               <td class="py-4 px-6">
                 <div class="flex items-center gap-3">
                   <div class="h-9 w-9 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center overflow-hidden">
                     <!-- Substitua o src pela tag da foto dinamicamente se houver -->
-                    <span class="text-xs font-semibold text-emerald-400">JS</span>
+                    <span class="text-xs font-semibold text-emerald-400">{{mentorado.nome}}</span>
                   </div>
                   <div>
-                    <span class="font-medium text-white block">Jones Souza</span>
-                    <span class="text-xs text-zinc-500 md:hidden">10-100k • Ativo</span>
+                    <span class="font-medium text-white block">{{mentorado.nome}}</span>
+                    <span class="text-xs text-zinc-500 md:hidden">{{mentorado.estagio}}</span>
                   </div>
                 </div>
               </td>
               <td class="py-4 px-6 hidden sm:table-cell">
                 <span class="inline-flex items-center rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-300 ring-1 ring-inset ring-white/10">
-                  10-100k
+                  {{mentorado.estagio}}
                 </span>
               </td>
               <td class="py-4 px-6">
@@ -171,9 +173,10 @@
                   <span class="text-zinc-300 text-sm">Ativo</span>
                 </div>
               </td>
-              <td class="py-4 px-6 text-zinc-400 hidden md:table-cell">19/07/2026</td>
-              <td class="py-4 px-6 text-zinc-400 hidden lg:table-cell">Jones Souza</td>
+              <td class="py-4 px-6 text-zinc-400 hidden md:table-cell">{{mentorado.criado_em}}</td>
+              <td class="py-4 px-6 text-zinc-400 hidden lg:table-cell">{{mentorado.navigator.nome}}</td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -181,4 +184,5 @@
 
   </main>
 </div>
+
 {% endblock 'body' %}
